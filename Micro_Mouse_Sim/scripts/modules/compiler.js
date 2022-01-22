@@ -1,5 +1,5 @@
 /*
-The purpose of this file to control which functions and variables the user can use
+The purpose of this file to strictly control which functions and variables the user can use
 */
 
 import {
