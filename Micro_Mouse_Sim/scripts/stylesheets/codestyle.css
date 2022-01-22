@@ -1,0 +1,56 @@
+c {
+	font-family: Consolas,"courier new";
+	color: white;
+}
+
+/*
+Declaration key words: let, var, const, function, class
+*/
+c.declaration {
+	color: #fc6203;
+	font-weight: 550;
+}
+
+/*
+Consitional key words: if, else, switch, case
+*/
+c.conditionals {
+	color: #ffdd57;
+}
+
+/*
+Keywords: this, window, async, true, false, undefined
+*/
+
+c.keyword {
+	color: #fc6203;
+}
+
+/*
+Strings
+*/
+c.string {
+	color: #e4ff91;
+}
+
+/*
+Numbers
+*/
+c.number {
+	color: #c891ff;
+}
+
+/*
+Function calls of mouse functions
+*/
+c.functionCall {
+	color: #5c9dff;
+	font-style: italic;
+}
+
+/*
+Default text
+*/
+c.default {
+	color: white;
+}
