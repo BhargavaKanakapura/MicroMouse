@@ -1,0 +1,101 @@
+.texteditor {
+	background:transparent; 
+	border: 1px solid white;
+	border-radius: 5px;
+	width:100%;
+	resize:none;
+	padding:7px;
+	overflow:auto;
+	flex:1;
+	word-wrap: break-word;
+  	word-break: break-all;
+	white-space:pre-wrap;
+	font-family: Consolas,"courier new";
+	color: white;
+	font-size: 105%;
+}
+
+.texteditor:selected {
+	border: 2px solid #00ff33;
+}
+
+textarea {
+	color:white; 
+	width:100%; 
+	height:25%; 
+	font-size:15px; 
+	resize:none;
+	height:18%; 
+	background-color:#1f1f1f; 
+	border:2px solid white; 
+	border-radius:5px;
+}
+
+.console {
+	background:#1a1a1a; 
+	border: 1px solid white;
+	border-radius: 5px;
+	width:100%; 
+	/*max-height:155px;
+	height:18%;*/
+	resize:none;
+	padding:7px;
+	overflow:auto;
+	flex:1;
+	word-wrap: break-word;
+  	word-break: break-all;
+	font-family: Consolas,"courier new";
+	white-space:pre-wrap;
+}
+
+div.message {
+	padding: 10px;
+	min-width: 100%;
+}
+
+div.message.endcall {
+	color: rgb(66, 135, 245);
+	border-top: 1px solid rgb(66, 135, 245);
+	border-bottom: 1px solid rgb(66, 135, 245);
+	background: rgba(66, 135, 245, 0.085);
+}
+
+div.message.err {
+	color: rgb(255, 61, 68);
+	border-top: 1px solid rgb(255, 61, 68);
+	border-bottom: 1px solid rgb(255, 61, 68);
+	background: rgba(255, 61, 68, 0.085);
+}
+
+div.message.warning {
+	color: rgb(255, 170, 51);
+	border-top: 1px solid rgb(255, 170, 51);
+	border-bottom: 1px solid rgb(255, 170, 51);
+	background: rgba(255, 170, 51, 0.085);
+}
+
+div.message.default {
+	padding: 2px;
+	margin: 0px;
+}
+
+code {
+	font-family: Consolas,"courier new";
+	padding:5px;
+	background: #333333;
+	border-radius: 2px;
+	color:crimson;
+}
+
+div.qabox {
+	background:#1f1f1f; 
+	border: 2px solid white;
+	border-radius: 5px;
+	margin:10px;
+	width=100%
+}
+
+p.question {
+	font-weight: bold;
+	padding-bottom: 2px;
+}
