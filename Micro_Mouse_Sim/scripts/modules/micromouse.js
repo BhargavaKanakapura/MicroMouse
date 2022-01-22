@@ -1,8 +1,7 @@
 import {initReader, getRows, getCols, getDir, getPos, getEndPoints, readMaze, convertPosToString} from "./mazereader.js";
 import {stopScript, printUI} from "/Micro_Mouse_Sim/sources/scripts/script.js";
 import {st_coridorLength, st_paths, st_isWallInFront, st_isWallRight, st_isWallLeft} from "./tools/sensortools.js";
-import {Graph} from "./tools/dsgraph.js";
-import {Queue} from "./tools/dsqueue.js";
+import {compile} from "./compiler.js";
 
 
 var MAZE_HEIGHT, MAZE_WIDTH, 
@@ -387,7 +386,7 @@ export function pause() {
 	
 }
 
-export function runScript(micromouseAI) {
+export function runScript(code) {
     /*
     Run the micromouseAI script and update the graphics
     */
@@ -401,7 +400,7 @@ export function runScript(micromouseAI) {
 		if (!paused){
 		
 			try{
-				eval(micromouseAI); //Call micromouseAI()
+				compile(code); //Call micromouseAI()
 				document.getElementById('steps').innerHTML = 'Steps: ' + totalSteps.toString(); //Update the step counter
 				resetForwardCallCount(); //Reset the forward calls variable so moveForward() can be called in the next iteration
 			}
