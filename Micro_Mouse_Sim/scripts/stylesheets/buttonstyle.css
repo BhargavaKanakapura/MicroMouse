@@ -1,0 +1,113 @@
+.button {
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-size: 25px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button:enabled span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:enabled:hover span {
+  padding-right: 25px;
+}
+
+.button:enabled:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.smallbutton {
+	padding: 10px;
+	min-width: 150px;
+	background-color: #356b0c;
+	border: 3px solid #263b16;
+	border-radius: 5px;
+	color: white;
+	margin-right: 10px;
+}
+
+.smallbutton:enabled:hover {
+	background-color: #3e5e26;
+}
+
+input[type=file]::file-selector-button {
+	padding: 10px;
+	min-width: 150px;
+	background-color: #356b0c;
+	border: 2px solid #263b16;
+	border-radius: 5px;
+	color: white;
+	margin-right: 10px;
+}
+
+input[type=file]::file-selector-button:hover {
+	background-color: #3e5e26;
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+  padding: 10px;
+  min-width: 150px;
+  background-color: #356b0c;
+  border: 2px solid #263b16;
+  border-radius: 5px;
+  color: white;
+  margin-right: 10px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+  z-index: 1;
+  text-align: center;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 8px 7px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #9f9f9f; cursor:pointer;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e5e26;
+}
