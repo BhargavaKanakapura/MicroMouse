@@ -1,0 +1,16 @@
+table, th, td {
+  border: 1px solid white;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    min-width: 30px;
+    height: 30px;
+    text-align: center;
+	overflow: auto;
+	white-space: nowrap;
+	overflow: hidden;
+}
