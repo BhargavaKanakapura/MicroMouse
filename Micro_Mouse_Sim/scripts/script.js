@@ -14,7 +14,7 @@ function runMainScript() {
 	
 		//Format the user code
 		let micromouseAI = standardizeCode(document.getElementById("mmai").innerHTML);
-		//console.log(micromouseAI); //For testing purposes
+		let headerCode = standardizeCode(document.getElementById("header").innerHTML);
 
 		if (micromouseAI == '') { //Empty code
 			printUI('Code is empty', 'err')
@@ -32,7 +32,7 @@ function runMainScript() {
 
 			//run micromouseAI()
 			try {
-				runScript(micromouseAI);
+				runScript(headerCode, micromouseAI);
 			}
 
 			catch (err) { //Error handling
@@ -112,7 +112,9 @@ function initialize() {
 	*/
 	
 	initMaze();
-	document.getElementById('mmai').style.height = document.getElementById('maze').offsetHeight + 'px';
+	let height = (document.getElementById('maze').offsetHeight - document.getElementById('minnavbar').offsetHeight) + 'px';
+	document.getElementById('mmai').style.height = height;
+	document.getElementById('header').style.height = height;
 	document.getElementById('console').style.height = (document.getElementById('statsandcontrol').offsetHeight - 40) + 'px';
 	
 }
@@ -186,69 +188,97 @@ function switchView(state) {
 		document.getElementById('mincodeeditor').hidden = true;
 		document.getElementById('maxcodeeditor').hidden = false;
 		document.getElementById('expandedmmai').innerHTML = document.getElementById('mmai').innerHTML;
+		document.getElementById('expandedheader').innerHTML = document.getElementById('header').innerHTML;
 	}
 	
 	else {
 		document.getElementById('mincodeeditor').hidden = false;
 		document.getElementById('maxcodeeditor').hidden = true;
 		document.getElementById('mmai').innerHTML = document.getElementById('expandedmmai').innerHTML;
+		document.getElementById('header').innerHTML = document.getElementById('expandedheader').innerHTML;
 	}
 	
 }
 
 
-document.getElementById('mmai').addEventListener('keydown', function(e) {
+function switchFile(to, loc) {
 	/*
-	Map the 'Enter' and 'Tab' keys
+	Switch between the header and micomouseAI files
 	*/
 	
-	switch (e.key) {
-			
-		case 'Tab':
-			e.preventDefault();
-    		document.execCommand('insertHTML', false, '    '); //Insert a 4-space tab
-			break;
-			
-		case 'Enter':
-			e.preventDefault();
-			document.execCommand("insertLineBreak"); //Insert a new line
-			break;
-			
+	if (to == 0) {
+		
+		if (loc == 0) {
+			document.getElementById('mmai').hidden = true;
+			document.getElementById('header').hidden = false;
+			document.getElementById('mmaiselectormin').className = '';
+			document.getElementById('headerselectormin').className = 'active';
+		}
+		
+		else {
+			document.getElementById('expandedmmai').hidden = true;
+			document.getElementById('expandedheader').hidden = false;
+			document.getElementById('mmaiselectormax').className = '';
+			document.getElementById('headerselectormax').className = 'active';
+		}
+		
 	}
+	
+	else {
+		
+		if (loc == 0) {
+			document.getElementById('mmai').hidden = false;
+			document.getElementById('header').hidden = true;
+			document.getElementById('mmaiselectormin').className = 'active';
+			document.getElementById('headerselectormin').className = '';
+		}
+		
+		else {
+			document.getElementById('expandedmmai').hidden = false;
+			document.getElementById('expandedheader').hidden = true;
+			document.getElementById('mmaiselectormax').className = 'active';
+			document.getElementById('headerselectormax').className = '';
+		}
+		
+	}
+	
+}
 
+//Change key press results for text editor elements
+['mmai', 'header', 'expandedmmai', 'expandedheader'].forEach(function(id) {
+	
+	document.getElementById(id).addEventListener('keydown', function(e) {
+		/*
+		Map the 'Enter' and 'Tab' keys
+		*/
+
+		switch (e.key) {
+
+			case 'Tab':
+				e.preventDefault();
+				document.execCommand('insertHTML', false, '    '); //Insert a 4-space tab
+				break;
+
+			case 'Enter':
+				e.preventDefault();
+				document.execCommand("insertLineBreak"); //Insert a new line
+				break;
+
+		}
+
+	});
+	
+	document.getElementById(id).addEventListener('keyup', styleCode); //Style code on keypress
+	
 });
 
 
-document.getElementById('expandedmmai').addEventListener('keydown', function(e) {
-	/*
-	Map the 'Enter' and 'Tab' keys
-	*/
-	
-	switch (e.key) {
-			
-		case 'Tab':
-			e.preventDefault();
-    		document.execCommand('insertHTML', false, '    '); //Insert a 4-space tab
-			break;
-			
-		case 'Enter':
-			e.preventDefault();
-			document.execCommand("insertLineBreak"); //Insert a new line
-			break;
-			
-	}
-
-});
-
-
-document.getElementById('mmai').addEventListener('keyup', styleCode);
-document.getElementById('expandedmmai').addEventListener('keyup', styleCode);
-
-
-window.runMainScript = runMainScript; //Globalize the runMainScript function for use outside of this module
-window.stopScript = stopScript;       //Globalize the stopScript function
-window.adjustSize = initialize;       //Globalize the adjustSize function
+//Globalize HTML functions
+window.runMainScript = runMainScript;
+window.stopScript = stopScript;
+window.adjustSize = initialize;
 window.loadFile = loadFile;
 window.download = download;
 window.changeMaze = changeMaze;
 window.switchView = switchView;
+window.switchFile = switchFile;
