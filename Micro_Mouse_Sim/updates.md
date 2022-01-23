@@ -5,7 +5,7 @@
 <ul>
   <li>All base files added, with basic functionality</li>
   <li>Expanded view added</li>
-  <li>Queue datastructure implemented</li>
+  <li><code>Queue</code> datastructure implemented</li>
 </ul>
 
 #### January 22, 2022
