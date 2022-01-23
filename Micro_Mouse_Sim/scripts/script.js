@@ -282,3 +282,4 @@ window.download = download;
 window.changeMaze = changeMaze;
 window.switchView = switchView;
 window.switchFile = switchFile;
+
