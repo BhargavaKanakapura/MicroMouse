@@ -1,102 +1,165 @@
 <!--https://micro-mouse-sim-rkxlb.run-us-west2.goorm.io/Micro_Mouse_Sim/-->
-
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" href="./sources/scripts/stylesheets/mazestyle.css">
-		<link rel="stylesheet" href="./sources/scripts/stylesheets/codestyle.css">
-		<link rel="stylesheet" href="./sources/scripts/stylesheets/buttonstyle.css">
-		<link rel="stylesheet" href="./sources/scripts/stylesheets/texteditorstyles.css">
-		<link rel="stylesheet" href="./sources/scripts/stylesheets/pagesetup.css">
-	</head>
-	<body style='color:white' id='mazeIDE' onload="adjustSize()">
-		<header>
-		 	<h2 style='font-size:55px'>Micromouse Challenge</h2>
-			<p id='instructions' style='font-size:15'>Write a program for the mouse to follow at each step. You may use the functions <code>moveForward()</code> to move one square forward. Note that <code>moveForward()</code> can only be called once per call of <code>micromouseAI()</code>. You may also use the functions <code>turnLeft()</code>, <code>turnRight()</code>, <code>isWallLeft()</code>, <code>isWallRight()</code>, and <code>isWallInFront()</code> to navigate the maze. Call <code>foundFinish()</code> when you think that you have found the finish (a 2 x 2 square), and <code>resetCount()</code> to reset the step counter if you return to the start. Look below for more information. Use <code>printUI(message)</code> to print to the console, and press the clear button to clear the console.</p>
-		</header>
-		<div id='mincodeeditor'>
-		<section>
-			<nav>
-				<table style='color:green; font-weight:bold;' id='maze'></table><br>
-				<table style='border:none;' id='statsandcontrol'><colgroup><col width='30%'/><col width='60%'/></colgroup><tr><td rowspan=2><button class="button" style="background-color:#037bfc; border: 5px solid #004996" onclick='runMainScript()' id='start' ct='start'><span>Run Script </span></button><br><button class="button" style="background-color:red; border: 5px solid darkred; opacity:0.5" onclick='stopScript()' id='stop' disabled='true'><span>Stop </span></button></td><td style='color:white'><p id='steps'>Steps: 0</p><p id='time'>Time: 0</p></td></tr><tr><td style='color:white'><p>Highscore: 0</p><p>Best Time: 0</p></td></tr></table>
-			</nav>
-			<article id='editing'>		
-				<div id='mmai' class='texteditor' placeholder='Enter your code here' contenteditable></div>
-				<div style='margin-top:15px; margin-bottom:15px;'><button class='smallbutton' onClick='document.getElementById("console").innerHTML = "";'>Clear Console</button><button class='smallbutton' onclick='download()'>Download</button><div class="dropdown"><button class="dropbtn">Change Maze</button><div class="dropdown-content"><a onclick='changeMaze("1")'>Maze 1</a><a onclick='changeMaze("2")'>Maze 2</a><a onclick='changeMaze("3")'>Maze 3</a><a onclick='changeMaze("4")'>Maze 4</a><a onclick='changeMaze("5")'>Maze 5</a></div></div><button class='smallbutton' onClick='switchView(0)'>Expand</button> Upload Code: <input type='file' id='mmaicodefile' onchange='loadFile(this)'></div>
-					<div class='console' id='console'></div>
-			</article>
-		</section></div>
-		<div id='maxcodeeditor' hidden><article>
-			<div id='expandedmmai' class='texteditor' style='min-height:900px;' contenteditable></div><br><div><button class='smallbutton' onclick='switchView(1)'>Return</button><button class='smallbutton' onclick='download()'>Download</button>Upload Code: <input type='file' id='mmaicodefile' onchange='loadFile(this)'></div>
-		</article></div>
-		<br><br>
-		<footer>
-			<center><h2>Questions and Answers</h2></center>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>What is the Micromouse Challenge?</p>
-				<p>The Micromouse Challenge is a robotics/CS challenge proposed by IEEE in 1970. The challenge was for a robot (mouse) to solve a complex maze in the fewest number of steps with the fastest time. This is a virtual micromouse maze, where you will program the virtual mouse to navigate this virtual maze.</p>
-			</div>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>Where is the end?</p>
-				<p>The end is marked by an open (closed off by walls with only one entry, but no internal walls) 2 x 2 square with. There is only one such 2 x 2 square per maze. Your program should call <code>foundFinish()</code> once it thinks that it had found the finish. Note that calling <code>foundFinish()</code> if the mouse has not reached the end will still stop the program (i.e. the program is ended by calling <code>foundFinish()</code>).</p>
-			</div>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>What exactly do I program? Do I need to write all the functions listed at the top?</p>
-				<p>No. All the functions listed at the top are already declared, and you will use them as normal functions that were defined earlier in the code (like imported functions). You are writing the program (using Javascript, not Node.js) in the inside of a function called <code>micromouseAI()</code>. This function takes no parameters, may NOT be called recursively (you cannot call <code>micromouseAI()</code> in your code), and is called repeatedly until <code>foundFinish()</code> is called. All you need to do is fill in the inside of <code>micromouseAI()</code>. Do NOT declare a function <code>micromouseAI()</code> in your code as this is already done. Please note that any variables or functions declared in the scope of your code will be reset with successive calls. You may need to use Global Variables (see below) to store information. Just write the javascript code as you normally would, and the we will do the rest.</p>
-				<button onclick='let box = document.getElementById("samplemmai").style; if (box.visibility=="collapse") {box.visibility="visible"; box.height="275px";} else {box.visibility="collapse"; box.height="0px";}'>Show me an example code</button><br>
-				<textarea disabled style='height:0px; visibility:collapse' id='samplemmai'>
-if (isWallLeft()) {
-    moveForward();
-}
-
-else if (isWallInFront()) {
-	turnRight();
-	turnRight();
-}
-
-else {
-	moveForward();
-}
-
-printUI("This is an example print. By the way, this code won't work");
-				</textarea>
-			</div>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>How can I define Global Variables so they are not erased after each call?</p>
-				<textarea disabled style='height:150px;'>
-if (window.variableName == undefined) {
-	window.variableName; //Initialize the value of the globa; variable					
-}
-else {
-	//Do Something with the global variable or ...
-	let l_variableName = window.variableName; //set a local variable with the same name
-}
-					
-//If you chose to store the Global Variable as a local variable ...
-window.variableName = l_variableName;
-				</textarea>
-				<p>You can use the <code>window.variableName;</code> method to declare global variable. On the first call, the variable will be undefined, so it will have a value of undefined. From then on, the variable name will be defined, so you can use it in your code.</p>
-			</div>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>Is there a time limit? Or a limit to the length of my code?</p>
-				<p>There are no limits. Your code can be as long as you need, and there is no time limit. However, you should attempt to find the quickest solution as fast as possible. NOTE: your mouse can perform as many turns as it wants during one call of <code>micromouseAI()</code>, but can move ONLY ONE square per call.</p>
-			</div>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>I found the finish. How do I optimize?</p>
-				<p>Once you feel that you have enough information about the maze, return to the start square. Then call <code>resetCount()</code> to restart the step counter, but not the timer. Then take the fastest route to the finish, and call <code>foundFinish()</code>. Do not call <code>foundFinish()</code> unless you want the results to be registered (you have found the most optimal route).</p>
-			</div>
-		</footer>
-		<footer>
-			<center><h2>Functions and Docs</h2></center>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>Enviornment Sensing Functions <code>isWallInFront()</code> <code>isWallLeft()</code> <code>isWallRight()</code> <code>corridorLength()</code> <code>paths()</code></p>
-				<p>These functions allow the mouse to detect the immediate sourroundings (in the current square), and within the view of the mouse (in one direction only). <code>isWallInFront()</code>, <code>isWallLeft()</code>, and <code>isWallRight()</code> check for immediate walls in the relative (to the current direction of the mouse) and respective directions. <code>corridorLength()</code> checks for the distance to the next wall in the current direction of the mouse. <code>paths()</code> checks for the number of directions from the current position of the mouse the mouse can travel, excluding the direction fron which the mouse came.</p>
-			</div>
-			<div class='qabox' style='padding:15px'>
-				<p class='question'>Movement Functions <code>moveForward()</code> <code>turnRight()</code> <code>turnLeft()</code></p>
-				<p>These functions allow the mouse to move the enviornament. All functions are relative to the current direction of the mouse.</p>
-			</div>
-		</footer>
+    <head>
+        <link rel="stylesheet" href="./sources/scripts/stylesheets/mazestyle.css">
+        <link rel="stylesheet" href="./sources/scripts/stylesheets/codestyle.css">
+        <link rel="stylesheet" href="./sources/scripts/stylesheets/buttonstyle.css">
+        <link rel="stylesheet" href="./sources/scripts/stylesheets/texteditorstyles.css">
+        <link rel="stylesheet" href="./sources/scripts/stylesheets/pagesetup.css">
+    </head>
+    <body style='color:white' id='mazeIDE' onload="adjustSize()">
+        <header>
+            <h2 style='font-size:55px'>Micromouse Challenge</h2>
+            <p id='instructions' style='font-size:15'>
+                Write a program for the mouse to follow at each step. You may use the functions <code>moveForward()</code>
+                to move one square forward. Note that <code>moveForward()</code>
+                can only be called once per call of <code>micromouseAI()</code>
+                . You may also use the functions <code>turnLeft()</code>
+                , <code>turnRight()</code>
+                , <code>isWallLeft()</code>
+                , <code>isWallRight()</code>
+                , and <code>isWallInFront()</code>
+                to navigate the maze. Call <code>foundFinish()</code>
+                when you think that you have found the finish (a 2 x 2 square), and <code>resetCount()</code>
+                to reset the step counter if you return to the start. Look below for more information. Use <code>printUI(message)</code>
+                to print to the console, and press the clear button to clear the console.
+            </p>
+        </header>
+        <div id='mincodeeditor'>
+            <section>
+                <nav>
+                    <table style='color:green; font-weight:bold;' id='maze'></table>
+                    <br>
+                    <table style='border:none;' id='statsandcontrol'>
+                        <colgroup>
+                            <col width='30%'/>
+                            <col width='60%'/>
+                        </colgroup>
+                        <tr>
+                            <td rowspan=2>
+                                <button class="button" style="background-color:#037bfc; border: 5px solid #004996" onclick='runMainScript()' id='start' ct='start'>
+                                    <span>Run Script </span>
+                                </button>
+                                <br>
+                                <button class="button" style="background-color:red; border: 5px solid darkred; opacity:0.5" onclick='stopScript()' id='stop' disabled='true'>
+                                    <span>Stop </span>
+                                </button>
+                            </td>
+                            <td style='color:white'>
+                                <p id='steps'>Steps: 0</p>
+                                <p id='time'>Time: 0</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style='color:white'>
+                                <p>Highscore: 0</p>
+                                <p>Best Time: 0</p>
+                            </td>
+                        </tr>
+                    </table>
+                </nav>
+                <article id='editing'>
+                    <ul id='minnavbar'>
+                        <li>
+                            <a id='mmaiselectormin' class="active" onClick="switchFile(1, 0)">micromouseAI.js</a>
+                        </li>
+                        <li>
+                            <a id='headerselectormin' onClick="switchFile(0, 0)">header.js</a>
+                        </li>
+                    </ul>
+                    <div id='mmai' class='texteditor' placeholder='Enter your code here' contenteditable></div>
+                    <div id='header' class='texteditor' placeholder='Enter your code here' contenteditable hidden></div>
+                    <div style='margin-top:15px; margin-bottom:15px;'>
+                        <button class='smallbutton' onClick='document.getElementById("console").innerHTML = "";'>Clear Console</button>
+                        <button class='smallbutton' onclick='download()'>Save</button>
+                        <div class="dropdown">
+                            <button class="dropbtn">Change Maze</button>
+                            <div class="dropdown-content">
+                                <a onclick='changeMaze("1")'>Maze 1</a>
+                                <a onclick='changeMaze("2")'>Maze 2</a>
+                                <a onclick='changeMaze("3")'>Maze 3</a>
+                                <a onclick='changeMaze("4")'>Maze 4</a>
+                                <a onclick='changeMaze("5")'>Maze 5</a>
+                            </div>
+                        </div>
+                        <button class='smallbutton' onClick='switchView(0)'>Expand</button>
+                        Upload Code: <input type='file' id='mmaicodefile' onchange='loadFile(this)'>
+                    </div>
+                    <div class='console' id='console'></div>
+                </article>
+            </section>
+        </div>
+        <div id='maxcodeeditor' hidden>
+            <article>
+                <ul id='minnavbar'>
+                    <li>
+                        <a id='mmaiselectormax' class="active" onClick="switchFile(1, 1)">micromouseAI.js</a>
+                    </li>
+                    <li>
+                        <a id='headerselectormax' onClick="switchFile(0, 1)">header.js</a>
+                    </li>
+                </ul>
+                <div id='expandedmmai' class='texteditor' style='min-height:900px;' contenteditable></div>
+                <div id='expandedheader' class='texteditor' style='min-height:900px;' contenteditable hidden></div>
+                <br>
+                <div>
+                    <button class='smallbutton' onclick='switchView(1)'>Return</button>
+                    <button class='smallbutton' onclick='download()'>Save</button>
+                    Upload Code: <input type='file' id='mmaicodefile' onchange='loadFile(this)'>
+                </div>
+            </article>
+        </div>
+        <br>
+        <br>
+        <footer>
+            <center>
+                <h2>Questions and Answers</h2>
+            </center>
+            <div class='qabox' style='padding:15px'>
+                <p class='question'>What is the Micromouse Challenge?</p>
+                <p>The Micromouse Challenge is a robotics/CS challenge proposed by IEEE in 1970. The challenge was for a robot (mouse) to solve a complex maze in the fewest number of steps with the fastest time. This is a virtual micromouse maze, where you will program the virtual mouse to navigate this virtual maze.</p>
+            </div>
+            <div class='qabox' style='padding:15px'>
+                <p class='question'>Where is the end?</p>
+                <p>
+                    The end is marked by an open (closed off by walls with only one entry, but no internal walls) 2 x 2 square with. There is only one such 2 x 2 square per maze. Your program should call <code>foundFinish()</code>
+                    once it thinks that it had found the finish. Note that calling <code>foundFinish()</code>
+                    if the mouse has not reached the end will still stop the program (i.e. the program is ended by calling <code>foundFinish()</code>
+                    ).
+                </p>
+            </div>
+        </footer>
+        <footer>
+            <center>
+                <h2>Functions and Docs</h2>
+            </center>
+            <div class='qabox' style='padding:15px'>
+                <p class='question'>
+                    Enviornment Sensing Functions <code>isWallInFront()</code>
+                    <code>isWallLeft()</code>
+                    <code>isWallRight()</code>
+                    <code>corridorLength()</code>
+                    <code>paths()</code>
+                </p>
+                <p>
+                    These functions allow the mouse to detect the immediate sourroundings (in the current square), and within the view of the mouse (in one direction only). <code>isWallInFront()</code>
+                    , <code>isWallLeft()</code>
+                    , and <code>isWallRight()</code>
+                    check for immediate walls in the relative (to the current direction of the mouse) and respective directions. <code>corridorLength()</code>
+                    checks for the distance to the next wall in the current direction of the mouse. <code>paths()</code>
+                    checks for the number of directions from the current position of the mouse the mouse can travel, excluding the direction fron which the mouse came.
+                </p>
+            </div>
+            <div class='qabox' style='padding:15px'>
+                <p class='question'>
+                    Movement Functions <code>moveForward()</code>
+                    <code>turnRight()</code>
+                    <code>turnLeft()</code>
+                </p>
+                <p>These functions allow the mouse to move the enviornament. All functions are relative to the current direction of the mouse.</p>
+            </div>
+        </footer>
         <script type='module' src='./sources/scripts/script.js'></script>
-	</body>
+    </body>
 </html>
