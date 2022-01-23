@@ -1,6 +1,16 @@
-January 21, 2022
-- All base files added
-<! -- --> 
-January 22, 2022
-- Header file added to execute code at beggining of user run
-- Q&A section removed for updates
+# Updates
+
+#### January 21, 2022
+
+<ul>
+  <li>All base files added, with basic functionality</li>
+  <li>Expanded view added</li>
+  <li>Queue datastructure implemented</li>
+</ul>
+
+#### January 22, 2022
+
+<ul>
+  <li>Header file added</li>
+  <li>Q&A section removed for updates</li>
+</ul>
