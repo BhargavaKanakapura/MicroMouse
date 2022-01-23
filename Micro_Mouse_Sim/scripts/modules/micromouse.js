@@ -1,7 +1,7 @@
 import {initReader, getRows, getCols, getDir, getPos, getEndPoints, readMaze, convertPosToString} from "./mazereader.js";
 import {stopScript, printUI} from "/Micro_Mouse_Sim/sources/scripts/script.js";
 import {st_coridorLength, st_paths, st_isWallInFront, st_isWallRight, st_isWallLeft} from "./tools/sensortools.js";
-import {compile} from "./compiler.js";
+import {compileHeader, compile} from "./compiler.js";
 
 
 var MAZE_HEIGHT, MAZE_WIDTH, 
@@ -386,14 +386,14 @@ export function pause() {
 	
 }
 
-export function runScript(code) {
+export function runScript(headerCode, code) {
     /*
     Run the micromouseAI script and update the graphics
     */
     
     changeMousePosition(startPos[0], startPos[1]); //Reset the position of the mouse
-    mouseDir = initMouseDir; //Reset the mouse direction
-    //clearInterval(animation); //Reset the animations
+    mouseDir = initMouseDir;   //Reset the mouse direction
+    compileHeader(headerCode); //Compile the header
     
     animation = setInterval(function() {
 		
