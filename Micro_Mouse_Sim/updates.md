@@ -6,7 +6,7 @@
   <li>All base files added, with basic functionality</li>
   <li>Expanded view added</li>
   <li><code>Queue()</code> datastructure implemented<ul>
-    <li>Initialize with <code>new Queue(<italics>values, ?maxLength</italics>)</code></li>
+    <li>Initialize with <code>new Queue(<em>values, ?maxLength</em>)</code></li>
   </ul></li>
 </ul>
 
