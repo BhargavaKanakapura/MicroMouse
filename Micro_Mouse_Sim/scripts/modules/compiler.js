@@ -1,5 +1,5 @@
 /*
-The purpose of this file to strictly control which functions and variables the user can use
+The purpose of this file to control which functions and variables the user can use
 */
 
 import {
@@ -18,6 +18,15 @@ import {
 import {Graph} from "./tools/dsgraph.js";
 import {Queue} from "./tools/dsqueue.js";
 import {printUI} from "/Micro_Mouse_Sim/sources/scripts/script.js"
+
+export function compileHeader(code) {
+	/*
+	Compile the header.js file
+	*/
+	
+	eval(code);
+	
+}
 
 export function compile(code) {
 	/*
