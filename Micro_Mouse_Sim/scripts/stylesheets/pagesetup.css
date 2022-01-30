@@ -100,16 +100,17 @@ li a {
   font-size: 90%;
   text-decoration: none;
   border: 2px solid #333;
-  border-bottom: 2px solid #04AA6D;
+  border-bottom: 2px solid #008cff;
 }
 
-li a:hover:not(.active) {
+li a:hover {
   cursor: pointer;
-  color: #04AA6D;
+  color: #82b2ff;
 }
 
 .active {
-  border: 2px solid #04AA6D;
+  color:#82b2ff;
+  border: 2px solid #008cff;
   border-bottom: 2px solid #333;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
