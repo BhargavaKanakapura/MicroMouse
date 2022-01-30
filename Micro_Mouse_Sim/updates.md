@@ -16,3 +16,11 @@
   <li>Header file added</li>
   <li>Q&A section removed for updates</li>
 </ul>
+
+### January 29, 2022
+
+<ul>
+  <li><code>Queue</code> datastructure updates with new <code>equal</code> method to deep compare objects</li>
+  <li>Settings bar added</li>
+  <li>Header script added</li>
+</ul>  
