@@ -320,19 +320,25 @@ export function foundFinish() {
 		
         if (endPos[i][0] == mousePos[0] && endPos[i][1] == mousePos[1]) {
 			
-            printUI('The maze was completed in %totalSteps steps and %time seconds!');
+			let score = time * fps + 10 * totalSteps;
+			
+            printUI('The maze was completed in ' + totalSteps + ' steps and ' + time + ' seconds!', 'endcall');
+			printUI('Score: ' + score, 'endcall');
 			stop();
 			
-			if (totalSteps > sessionHighScore) {
-				sessionHighScore = totalSteps;
+			if (score > sessionHighScore) {
+				sessionHighScore = score;
 			}
 			
-			if (time > sessionBestTime) {
-				sessionBestTime = time;
+			if (totalSteps > sessionBestTime) {
+				sessionBestTime = totalSteps;
 			}
+			
+			document.getElementById('highscore').innerHTML = "Highscore: " + sessionHighScore;
+			document.getElementById('besttime').innerHTML = "Best Step Count: " + sessionBestTime;
 			
 			stop();
-            return true;
+            return score;
 			
         }
 		
@@ -341,7 +347,7 @@ export function foundFinish() {
     printUI('The maze was not completed', 'err');
 	stop();
 	
-    return false;
+    return 0;
     
 }
 
@@ -373,9 +379,27 @@ var timer; //Set the time interval
 
 var paused = false; //The run is not paused
 
-const fps = 8; //Frames per seconds
+var fps = 8; //Frames per seconds
 const timeInterval = 10; //The interval counter for the timer
 
+
+export function changeFPS(newRate) {
+	/*
+	Change the animation rate
+	*/
+	
+	fps = newRate;
+	
+}
+
+export function getFPS() {
+	/*
+	Get the animation rate
+	*/
+	
+	return fps;
+	
+}
 
 export function pause() {
 	/*
@@ -393,7 +417,17 @@ export function runScript(headerCode, code) {
     
     changeMousePosition(startPos[0], startPos[1]); //Reset the position of the mouse
     mouseDir = initMouseDir;   //Reset the mouse direction
-    compileHeader(headerCode); //Compile the header
+	
+	try{
+    	compileHeader(headerCode); //Compile the header
+	}
+	
+	catch(err) {
+		stopScript();
+		printUI('An error was raised in header.js: ' + err.message, 'err');
+		throw(err);
+		return;
+	}
     
     animation = setInterval(function() {
 		
@@ -406,7 +440,7 @@ export function runScript(headerCode, code) {
 			}
 			catch(err) {
 				stopScript();
-				printUI('An error was raised in the code: ' + err.message, 'err');
+				printUI('An error was raised in micromouseAI.js: ' + err.message, 'err');
 				throw(err);
 			}
 			
