@@ -1,8 +1,7 @@
 .texteditor {
 	background:transparent; 
-	border: 2px solid #04AA6D;
+	border: 1px solid #008cff;
 	border-top: none;
-	border-radius: 0px;
 	width:100%;
 	resize:none;
 	padding:7px;
@@ -12,12 +11,15 @@
   	word-break: break-all;
 	white-space:pre-wrap;
 	font-family: Consolas,"courier new";
+	font-size:15px;
 	color: white;
 	border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
 .texteditor:focus {
+	border: 2px solid #008cff;
+	border-top: none;
 	outline:none;
 }
 
@@ -81,12 +83,9 @@ div.message.default {
 	margin: 0px;
 }
 
-code {
-	font-family: Consolas,"courier new";
-	padding:5px;
-	background: #333333;
-	border-radius: 2px;
-	color:crimson;
+p {
+	line-height:200%;
+	font-size:17px;
 }
 
 div.qabox {
