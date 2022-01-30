@@ -1,5 +1,5 @@
-import {runScript, stop, pause, initMaze, unloadMazeGUI} from "./modules/micromouse.js";
-import {styleCode, standardizeCode} from "./modules/codestyler.js"
+import {runScript, stop, pause, initMaze, unloadMazeGUI, getFPS, changeFPS} from "./modules/micromouse.js";
+import {styleMMAI, styleHeader, styleMaxMMAI, styleMaxHeader, standardizeCode} from "./modules/codestyler.js"
 
 
 document.getElementById('start').ct = 'start'; //Initialize tthe state of the start button
@@ -36,7 +36,7 @@ function runMainScript() {
 			}
 
 			catch (err) { //Error handling
-				printUI('An error was logged while running this code: ' + err.message, 'err');
+				printUI('An error was logged while running: ' + err.message, 'err');
 				stopScript();
 			}
 
@@ -122,25 +122,45 @@ function initialize() {
 
 function download() {
 	/*
-	Download the micromouseAI() function code as a .js file
+	Download the micromouseAI and header code as a .js file
 	*/
 	
-	const code = document.getElementById('mmai').innerHTML; //Get the code
-	const downloadLink = document.createElement('a');		//Create the hidden downloader
+	let code;
+	
+	if (document.getElementById('mincodeeditor').hidden) {
+		code = document.getElementById('expandedmmai').innerHTML; //Get the code
+	}
+	else {
+		code = document.getElementById('mmai').innerHTML; //Get the code
+	}
+	
+	let downloadLink = document.createElement('a');		  //Create the hidden downloader
 	
 	downloadLink.href = 'data:attachment/text,' + encodeURI(code); //Encode the text
 	downloadLink.target = '_blank';
 	
-	let fileName = prompt('Enter the name of the file'); //Get the file name as user input
-	while (fileName == '' && fileName != null) {         //The provided file name was invalid, and the cancel button was not clicked
-		fileName = prompt('Please enter a valid file name');
+	downloadLink.download = 'mmai.txt'; //Accessibility for computers which block .js file downloads
+	
+	try {
+		downloadLink.click();
+	}
+	catch {
+		alert('File could not be downloaded.');
 	}
 	
-	if (fileName == null) { //The cancel button was pressed
-		return; //Break out of the function
+	if (document.getElementById('mincodeeditor').hidden) {
+		code = document.getElementById('expandedheader').innerHTML; //Get the code
+	}
+	else {
+		code = document.getElementById('header').innerHTML; //Get the code
 	}
 	
-	downloadLink.download = fileName + '.js'; //Accessibility for computers which block .js file downloads
+	downloadLink = document.createElement('a');		  //Create the hidden downloader
+	
+	downloadLink.href = 'data:attachment/text,' + encodeURI(code); //Encode the text
+	downloadLink.target = '_blank';
+	
+	downloadLink.download = 'header.txt'; //Accessibility for computers which block .js file downloads
 	
 	try {
 		downloadLink.click();
@@ -162,7 +182,32 @@ function loadFile(input) {
 	
 	reader.readAsText(file);
 	
-	reader.onload = function() {document.getElementById('mmai').innerHTML = reader.result;};
+	let id; //Decide if the user is uplading to MMAI or header
+	
+	if (!document.getElementById('mincodeeditor').hidden) 
+	{
+		if (document.getElementById('mmai').hidden) {
+			id = 'header';
+		}	
+		else {
+			id = 'mmai';
+		}
+	}
+	else 
+	{
+		if (document.getElementById('expandedmmai').hidden) {
+			id = 'header';
+		}
+		else {
+			id = 'mmai';
+		}
+	}
+	
+	reader.onload = function() {
+		document.getElementById(id).innerHTML = reader.result;
+		document.getElementById('expanded' + id).innerHTML = reader.result;
+	};
+	
 	reader.onerror = function() {printUI(reader.error, 'err');};
 	
 }
@@ -244,6 +289,58 @@ function switchFile(to, loc) {
 	
 }
 
+
+function showSettings() {
+	/*
+	Show the settings
+	*/
+	
+	document.getElementById("settings-modal").style.display = 'block';
+	
+}
+
+function closeSettings() {
+	/*
+	Close the settings window
+	*/
+	
+	document.getElementById("settings-modal").style.display = 'none';
+	
+}
+
+function changeFontSize(change) {
+	/*
+	Change the font-size of the text in the text editors
+	*/
+	
+	['mmai', 'expandedmmai', 'header', 'expandedheader'].forEach( function(e) {
+		var el = document.getElementById(e);
+		var style = window.getComputedStyle(el, null).getPropertyValue('font-size');
+		var fontSize = parseFloat(style);
+		el.style.fontSize = (fontSize + change) + 'px';	
+		document.getElementById('fontsize').innerHTML = fontSize + change;
+	});
+	
+}
+
+function changeAnimRate(change) {
+	/*
+	Change the animation rate (steps per second) of the mouse
+	*/
+	
+	changeFPS(getFPS() + change);
+	document.getElementById('animrate').innerHTML = getFPS();
+	
+}
+
+//Cloase the settings modal if clicked elsewhere
+window.onclick = function(event) {
+	if (event.target == document.getElementById("settings-modal")) {
+		closeSettings();
+	}
+};
+
+
 //Change key press results for text editor elements
 ['mmai', 'header', 'expandedmmai', 'expandedheader'].forEach(function(id) {
 	
@@ -268,9 +365,12 @@ function switchFile(to, loc) {
 
 	});
 	
-	document.getElementById(id).addEventListener('keyup', styleCode); //Style code on keypress
-	
 });
+
+document.getElementById('mmai').addEventListener('keyup', styleMMAI);
+document.getElementById('header').addEventListener('keyup', styleHeader);
+document.getElementById('expandedmmai').addEventListener('keyup', styleMaxMMAI);
+document.getElementById('expandedheader').addEventListener('keyup', styleMaxHeader);
 
 
 //Globalize HTML functions
@@ -282,4 +382,7 @@ window.download = download;
 window.changeMaze = changeMaze;
 window.switchView = switchView;
 window.switchFile = switchFile;
-
+window.showSettings = showSettings;
+window.closeSettings = closeSettings;
+window.changeFontSize = changeFontSize;
+window.changeAnimRate = changeAnimRate;
