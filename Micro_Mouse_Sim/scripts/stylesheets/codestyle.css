@@ -1,12 +1,8 @@
-c {
-	font-family: Consolas,"courier new";
-	color: white;
-}
-
 /*
 Declaration key words: let, var, const, function, class
 */
-c.declaration {
+declaration {
+	font-family: Consolas,"courier new";
 	color: #fc6203;
 	font-weight: 550;
 }
@@ -14,7 +10,8 @@ c.declaration {
 /*
 Consitional key words: if, else, switch, case
 */
-c.conditionals {
+conditionals {
+	font-family: Consolas,"courier new";
 	color: #ffdd57;
 }
 
@@ -22,35 +19,46 @@ c.conditionals {
 Keywords: this, window, async, true, false, undefined
 */
 
-c.keyword {
-	color: #fc6203;
+keyword {
+	font-family: Consolas,"courier new";
+	color: #29ff62;
 }
 
 /*
 Strings
 */
-c.string {
-	color: #e4ff91;
+string {
+	font-family: Consolas,"courier new";
+	color: #f7ff80;
 }
 
 /*
 Numbers
 */
-c.number {
-	color: #c891ff;
+number {
+	font-family: Consolas,"courier new";
+	color: #7729ff;
 }
 
 /*
 Function calls of mouse functions
 */
-c.functionCall {
-	color: #5c9dff;
+call {
+	font-family: Consolas,"courier new";
+	color: #fc3af3;
 	font-style: italic;
 }
 
 /*
-Default text
+Code block in webpage
 */
-c.default {
-	color: white;
+code {
+	font-family: Consolas,"courier new";
+	padding-top:3px;
+	padding-bottom:3px;
+	padding-right:8px;
+	padding-left:8px;
+	background: #575757;
+	border-radius: 10px;
+	color:#77f763;
 }
