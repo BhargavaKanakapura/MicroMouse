@@ -15,9 +15,9 @@ import {
 	resetCount
 } from "./micromouse.js";
 
-import {Graph} from "./tools/dsgraph.js";
-import {Queue} from "./tools/dsqueue.js";
-import {printUI} from "/Micro_Mouse_Sim/sources/scripts/script.js"
+import {Graph, DirectedGraph, Tree} from "./tools/dsadvance.js";
+import {Queue, equal} from "./tools/dsbasic.js";
+import {printUI} from "/Micro_Mouse_Sim/sources/scripts/script.js";
 
 export function compileHeader(code) {
 	/*
