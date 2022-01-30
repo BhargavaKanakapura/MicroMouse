@@ -2,16 +2,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+		<title>MicroMouse Challenge</title>
         <link rel="stylesheet" href="./sources/scripts/stylesheets/mazestyle.css">
         <link rel="stylesheet" href="./sources/scripts/stylesheets/codestyle.css">
         <link rel="stylesheet" href="./sources/scripts/stylesheets/buttonstyle.css">
         <link rel="stylesheet" href="./sources/scripts/stylesheets/texteditorstyles.css">
         <link rel="stylesheet" href="./sources/scripts/stylesheets/pagesetup.css">
+		<link rel="stylesheet" href="./sources/scripts/stylesheets/popup.css">
+		<link rel="stylesheet" href="./sources/scripts/stylesheets/formelements.css">
     </head>
     <body style='color:white' id='mazeIDE' onload="adjustSize()">
         <header>
             <h2 style='font-size:55px'>Micromouse Challenge</h2>
-            <p id='instructions' style='font-size:15'>
+            <p id='instructions' class='instructions'>
                 Write a program for the mouse to follow at each step. You may use the functions <code>moveForward()</code>
                 to move one square forward. Note that <code>moveForward()</code>
                 can only be called once per call of <code>micromouseAI()</code>
@@ -38,7 +41,7 @@
                         </colgroup>
                         <tr>
                             <td rowspan=2>
-                                <button class="button" style="background-color:#037bfc; border: 5px solid #004996" onclick='runMainScript()' id='start' ct='start'>
+                                <button class="button" style="background-color:#3dab2e; border: 5px solid #1e6614;" onclick='runMainScript()' id='start' ct='start'>
                                     <span>Run Script </span>
                                 </button>
                                 <br>
@@ -46,15 +49,15 @@
                                     <span>Stop </span>
                                 </button>
                             </td>
-                            <td style='color:white'>
-                                <p id='steps'>Steps: 0</p>
-                                <p id='time'>Time: 0</p>
+                            <td style='color:white;'>
+                                <p id='steps' style='line-height:150%'>Steps: 0</p>
+                                <p id='time' style='line-height:150%'>Time: 0</p>
                             </td>
                         </tr>
                         <tr>
-                            <td style='color:white'>
-                                <p>Highscore: 0</p>
-                                <p>Best Time: 0</p>
+                            <td style='color:white;'>
+                                <p id='highscore' style='line-height:150%'>Highscore: 0</p>
+                                <p id='besttime' style='line-height:150%'>Best Step Count: 0</p>
                             </td>
                         </tr>
                     </table>
@@ -67,6 +70,9 @@
                         <li>
                             <a id='headerselectormin' onClick="switchFile(0, 0)">header.js</a>
                         </li>
+						<li style='float:right;'>
+							<a onclick='showSettings()' style="padding:5px; padding-right:10px; min-width:0px; border:none; font-size:20px;">&#9881;</a>
+						</li>
                     </ul>
                     <div id='mmai' class='texteditor' placeholder='Enter your code here' contenteditable></div>
                     <div id='header' class='texteditor' placeholder='Enter your code here' contenteditable hidden></div>
@@ -99,6 +105,9 @@
                     <li>
                         <a id='headerselectormax' onClick="switchFile(0, 1)">header.js</a>
                     </li>
+					<li style='float:right'>
+						<a onClick='showSettings()' style="padding:5px; padding-right:10px; min-width:0px; border:none; font-size:20px;">&#9881;</a>
+					</li>
                 </ul>
                 <div id='expandedmmai' class='texteditor' style='min-height:900px;' contenteditable></div>
                 <div id='expandedheader' class='texteditor' style='min-height:900px;' contenteditable hidden></div>
@@ -129,6 +138,12 @@
                     ).
                 </p>
             </div>
+			<div class='qabox' style='padding:15px'>
+                <p class='question'>How is the score calculated</p>
+                <p>
+					<code>10 * steps + time * animrate</code>, where steps is the number of steps as shown on the step counter when <code>foundFinsh()</code> was called, and <code>time</code> is the time in seconds as shown in the Time, and <code>animrate</code> is the number of times per second your micromouseAI.js code is called (this can be changed in the settings, but will not affect your score).
+                </p>
+            </div>
         </footer>
         <footer>
             <center>
@@ -153,13 +168,32 @@
             </div>
             <div class='qabox' style='padding:15px'>
                 <p class='question'>
-                    Movement Functions <code>moveForward()</code>
+                    Movement Functions 
+					<code>moveForward()</code>
                     <code>turnRight()</code>
                     <code>turnLeft()</code>
                 </p>
-                <p>These functions allow the mouse to move the enviornament. All functions are relative to the current direction of the mouse.</p>
+				<p>These functions allow the mouse to move the enviornament. All functions are relative to the current direction of the mouse.<code>moveForward()</code> will throw a warning if the program tries to move the mouse through a wall.</p>
             </div>
         </footer>
+		<div id="settings-modal" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span onclick='closeSettings()' class="close">&times;</span>
+					<h1>Settings</h1>
+				</div>
+				<div class="modal-body">
+					<h4>Font Size</h4>
+					<button class="left-decrease" onclick='changeFontSize(-1)'>-</button><button class='middle' id='fontsize'>15</button><button class='right-increase' onclick='changeFontSize(1)'>+</button>
+					<h4>Font Style</h4>
+					<h4>Animation Rate (Frames per Second)</h4>
+					<button class="left-decrease" onclick='changeAnimRate(-1)'>-</button><button class='middle' id='animrate'>8</button><button class='right-increase' onclick='changeAnimRate(1)'>+</button>
+				</div>
+				<div class="modal-header" style="color:#31353b; background-color:#31353b;">
+					PlaceHolder
+				</div>
+			</div>
+		</div>
         <script type='module' src='./sources/scripts/script.js'></script>
     </body>
 </html>
